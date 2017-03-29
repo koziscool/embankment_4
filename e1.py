@@ -11,7 +11,6 @@ def e1():
     
 if __name__ == "__main__":
     start = time.time()
-    # print
     print
     print "Euler 1 solution is:",  e1()
     end = time.time()
