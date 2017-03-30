@@ -1,26 +1,30 @@
         
 import time
 
-def unitFraction(  i):
+def unit_fraction_expansion_length(  i ):
     expansion = []
-    currentTuple = (1, 0)
+    current_tuple = (1, 0)
     dividend = 1
     decimal = 0
-    while currentTuple not in expansion:
-        expansion.append(currentTuple)
+    while current_tuple not in expansion:
+        expansion.append(current_tuple)
         dividend *= 10
         decimal = dividend / i 
         dividend = dividend % i 
-        currentTuple = dividend, decimal
+        current_tuple = dividend, decimal
     
-    return expansion
+    return len(expansion) -  expansion.index( current_tuple )
 
-print unitFraction(7)
 
 def e26():
-    return 'koz'
-    # for i in xrange(1, 100):
-    #     print i, "%.20f" % (1/float(i)) 
+    max_expansion_length, max_index = 1, 0
+    for i in xrange(1, 1000):
+        expansion_length = unit_fraction_expansion_length( i )
+        if max_expansion_length < expansion_length:
+            max_expansion_length = expansion_length
+            max_index = i 
+    
+    return max_index
 
 if __name__ == '__main__':
     start = time.time()
