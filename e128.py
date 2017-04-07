@@ -1,6 +1,23 @@
         
 import time
 
+def binary_search(alist, item):
+    first = 0
+    last = len(alist)-1
+    found = False
+  
+    while first<=last and not found:
+        midpoint = (first + last)//2
+        if alist[midpoint] == item:
+            found = True
+        else:
+            if item < alist[midpoint]:
+                last = midpoint-1
+            else:
+                first = midpoint+1
+  
+    return found
+
 def e128():
 
     primes = [2]
@@ -30,18 +47,15 @@ def e128():
         while primes[-1] < hex_plus_two - hex_this_index:
             build_primes_up_to( 2 * primes[-1] )
 
-        if ( hex_this_index - hex_minus_two - 1 in primes and 
-            hex_this_index - hex_minus_one - 1 in primes and 
-            hex_plus_one - hex_this_index- 1 in primes):
+        if binary_search( primes, hex_this_index - hex_minus_two - 1 ):
+            if binary_search( primes, hex_this_index - hex_minus_one - 1 ):
+                if binary_search( primes, hex_plus_one - hex_this_index- 1  ):
+                    three_prime_diff_neighbors.append( hex_this_index )
 
-            three_prime_diff_neighbors.append( hex_this_index )
-
-
-        if ( hex_plus_two - hex_this_index - 1 in primes and 
-            hex_plus_one + 1 - hex_this_index in primes and 
-            hex_plus_one - hex_this_index - 1 in primes):
-
-            three_prime_diff_neighbors.append( hex_this_index + 1 )
+        if binary_search( primes, hex_plus_two - hex_this_index - 1 ):
+            if binary_search( primes, hex_plus_one + 1 - hex_this_index  ):
+                if binary_search( primes, hex_plus_one - hex_this_index - 1  ):
+                    three_prime_diff_neighbors.append( hex_this_index + 1)
 
         if len(three_prime_diff_neighbors) == 2000:
             return three_prime_diff_neighbors[-1]
