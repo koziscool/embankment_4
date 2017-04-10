@@ -3,7 +3,6 @@ import time
 
 def e172():
     limit_num_digits = 18
-    total_digit_combos = { 1: 9 }
     digit_pattern_combos = { (1,): 9 }
     digit_pattern_tuples = { 1: [(1,)] }
     
@@ -18,9 +17,11 @@ def e172():
                 list_item_copy = list_item[:]
                 list_item_copy.append( 1 )
                 new_tuple = tuple( list_item_copy )
+
                 if new_tuple in digit_pattern_tuples[ index_num_digits ]:
                     digit_pattern_combos[new_tuple] += digit_pattern_combos[tuple_item] * (10 - len(tuple_item))
-                if ( new_tuple not in digit_pattern_tuples[ index_num_digits ] and new_tuple[0] <=3):
+
+                if new_tuple not in digit_pattern_tuples[ index_num_digits ]:
                     digit_pattern_tuples[ index_num_digits ].append( new_tuple )
                     digit_pattern_combos[new_tuple] = digit_pattern_combos[tuple_item] * (10 - len(tuple_item) )
 
@@ -29,22 +30,16 @@ def e172():
                 list_item_copy[i] += 1
                 list_item_copy.sort(reverse = True)
                 new_tuple = tuple( list_item_copy )
+
                 if new_tuple in digit_pattern_tuples[ index_num_digits ]:
                     digit_pattern_combos[new_tuple] += digit_pattern_combos[tuple_item] 
+                    
                 if new_tuple not in digit_pattern_tuples[ index_num_digits ] and new_tuple[0] <=3:
                     digit_pattern_tuples[ index_num_digits ].append( new_tuple )
                     digit_pattern_combos[new_tuple] = digit_pattern_combos[tuple_item] 
 
 
-    # print len(digit_pattern_combos)
-    # print digit_pattern_combos.keys()
-    
-    total_combos = 0
-    for k, v in digit_pattern_combos.items():
-        if sum(k) == limit_num_digits:
-            total_combos += v
-
-    return total_combos
+    return sum( v for k, v in digit_pattern_combos.items() if sum(k) == limit_num_digits )
 
 if __name__ == '__main__':
     start = time.time()
