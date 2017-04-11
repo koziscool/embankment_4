@@ -2,11 +2,7 @@
 import time
 from math import floor 
 
-# range_dict = {}
 primes = [2]
-# prime_factors = { 2: {2:1} }
-# distinct_factors = { 1: [1], 2: [1, 2] }
-
 
 def build_primes_up_to(n):
     current_counter = primes[-1] + 1
